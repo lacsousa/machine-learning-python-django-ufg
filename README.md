@@ -55,17 +55,17 @@ Esta seção será atualizada progressivamente com os avanços do projeto.
 ### 29/08/2026 - Configuração de Bibliotecas e Ambiente Web
 Para seguir com a ementa da disciplina, adicionamos suporte a visualização de dados e criamos a estrutura para rodar a aplicação em um navegador web.
 
-**Bibliotecas adicionadas:**
-- **`matplotlib`**: Utilizada para gerar gráficos estáticos através dos scripts locais em Python.
-- **`django`**: Framework web robusto utilizado para criar o sistema web/site.
-- **`plotly`**: Biblioteca para a construção de gráficos dinâmicos e interativos para a web.
+**Bibliotecas adicionadas (em ordem de inclusão):**
+- **`django`** e **`plotly`**: Instalados no setup inicial para o ambiente web interativo.
+- **`numpy`**: Adicionada para permitir a geração e manipulação eficiente de matrizes numéricas, como a criação do vetor de "área do imóvel".
+- **`matplotlib`**: Adicionada para nos permitir traçar gráficos 2D nativos (como no `regressao_01.py`).
 
 **Como instalamos com o `uv` (Boas Práticas):**
-Em vez de instalarmos os pacotes soltos (usando `pip install ...`), utilizamos o gerenciador do projeto:
+Em vez de instalarmos os pacotes soltos, utilizamos o gerenciador do projeto:
 ```bash
-uv add matplotlib django plotly
+uv add django plotly numpy matplotlib
 ```
-Isso garante que todas as bibliotecas e suas versões exatas fiquem salvas no arquivo `pyproject.toml`, facilitando a replicação do projeto.
+Isso garante que todas as bibliotecas e suas versões exatas fiquem salvas no arquivo `pyproject.toml` e no `uv.lock`, dispensando o uso de `requirements.txt`.
 
 **Criação da estrutura Web:**
 Em seguida, utilizamos o `uv` para invocar o Django e criar a pasta raiz do servidor e o módulo principal da disciplina (que chamamos de `am`):
@@ -74,6 +74,9 @@ uv run django-admin startproject python_django
 cd python_django
 uv run python manage.py startapp am
 ```
+
+### 29/08/2026 - Scripts Iniciais (Regressão Linear)
+- **`python_scripts/regressao_01.py`**: Criado o primeiro script isolado (sem dependência web) utilizando `numpy` e `matplotlib`. O script plota um modelo hipotético (simples equação de reta da regressão) para demonstrar a relação linear entre o tamanho de um imóvel e seu preço.
 
 ### 29/08/2026 - Setup Inicial
 - Configuração do repositório
