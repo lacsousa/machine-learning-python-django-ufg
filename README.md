@@ -11,10 +11,9 @@ Este projeto utiliza o gerenciador de pacotes e ambientes Python [**`uv`**](http
 Primeiro, faça o clone do repositório para a sua máquina local e acesse o diretório do projeto:
 
 ```bash
-git clone <URL_DO_SEU_REPOSITORIO>
-cd projeto
+git clone git@github.com:lacsousa/machine-learning-python-django-ufg.git
+cd machine-learning-python-django-ufg
 ```
-*(Substitua `<URL_DO_SEU_REPOSITORIO>` pelo link real do GitHub/GitLab quando houver)*
 
 ### 2. Pré-requisitos
 
