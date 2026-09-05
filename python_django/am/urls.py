@@ -7,4 +7,5 @@ app_name = 'app_am'
 urlpatterns = [
     path('', views.am_exemplo_01, name='am_exemplo_01'),
     path('am_exemplo_01', views.am_exemplo_01, name='am_exemplo_01'),
+    path('regressao_01/', views.regressao_01, name='regressao_01'),
 ]
