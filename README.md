@@ -48,23 +48,44 @@ uv run python manage.py runserver
 **Opção C: Documentação e Notas de Estudo (`notes/`)**
 Para guias teóricos, aprofundamento conceitual e orientações passo a passo de como estudar e debugar os códigos:
 - Consulte a pasta [`notes/`](notes/): contém anotações estruturadas e documentações didáticas dos tópicos vistos em aula.
-- Exemplo: [`notes/regressao.md`](notes/regressao.md) traz a dissecação completa dos scripts de regressão linear (do modelo geométrico básico até o Gradiente Descendente e Scikit-Learn).
+- Exemplos:
+  - [`notes/regressao.md`](notes/regressao.md): traz a dissecação completa dos scripts de regressão linear (do modelo geométrico básico até o Gradiente Descendente e Scikit-Learn).
+  - [`notes/supervisionado.md`](notes/supervisionado.md): guia completo de Aprendizado Supervisionado (Classificação, Scikit-Learn, k-Fold CV, Pipeline, GridSearch e o guia definitivo de métricas de avaliação multiclasse).
 
 ## 📁 Estrutura do Repositório
 
 ```text
 projeto-am/
-├── notes/             # Anotações teóricas, guias de estudo e roteiros de depuração
-│   └── regressao.md   # Guia detalhado da trilha de Regressão Linear (01 a 07)
-├── python_django/     # Servidor web Django e aplicação interativa com Plotly
-├── python_scripts/    # Scripts Python para experimentos de AM (01 a 07)
-├── pyproject.toml     # Gerenciamento de dependências via uv
-└── README.md          # Documentação principal do projeto
+├── notes/                                        # Anotações teóricas, guias de estudo e roteiros de depuração
+│   ├── regressao.md                              # Guia detalhado da trilha de Regressão Linear (01 a 07)
+│   └── supervisionado.md                         # Guia de Aprendizado Supervisionado, Classificação e Métricas
+├── python_django/                                # Servidor web Django e aplicação interativa com Plotly
+├── python_scripts/                               # Scripts Python para experimentos de AM
+│   ├── regressao_01.py ... regressao_07.py      # Trilha de Regressão Linear
+│   ├── supervisionado_01.py                      # Classificação Iris (Pipeline, KNN, GridSearchCV, plots 2D/3D)
+│   └── supervisionado_02_metricas_ficticias.py   # Dissecação e validação das métricas multiclasse (slides UFG)
+├── pyproject.toml                                # Gerenciamento de dependências via uv
+└── README.md                                     # Documentação principal do projeto
 ```
 
 ## 📝 Diário de Bordo e Avanços
 
 Esta seção será atualizada progressivamente com os avanços do projeto.
+
+### 05/09/2026 - Módulo de Aprendizado Supervisionado, Classificação e Métricas de Avaliação
+- **Adição de Dependências com `uv`**: Adicionadas as bibliotecas `scikit-learn` e `pandas` (`uv add scikit-learn pandas`).
+- **`python_scripts/supervisionado_01.py`**: Implementação completa do pipeline de classificação com o dataset Íris:
+  - Visualização gráfica em 2D e 3D interativa usando Matplotlib.
+  - Divisão estratificada dos dados com `train_test_split(..., test_size=0.15, random_state=42, stratify=y)`.
+  - Construção de `Pipeline` com `StandardScaler` e `KNeighborsClassifier`.
+  - Otimização de hiperparâmetros via `GridSearchCV` com 10 Folds de Validação Cruzada.
+  - Relatório de métricas (`classification_report`, `confusion_matrix`, `accuracy_score`) e teste de predição pontual.
+- **`python_scripts/supervisionado_02_metricas_ficticias.py`**: Script didático reproduzindo os cálculos dos slides do Prof. Dr. Ronaldo Martins da Costa:
+  - Decomposição da Matriz de Confusão 3x3 na abordagem *One-vs-Rest* (Setosa vs Resto).
+  - Cálculo detalhado de Verdadeiro Positivo (VP), Falso Positivo (FP), Falso Negativo (FN) e Verdadeiro Negativo (VN).
+  - Apresentação passo a passo e validação com os números da aula para Precisão (70%), Recall (46,67%), Especificidade (90%), Acurácia One-vs-Rest (75,56%), F1-Score (56%) e Acurácia Global (55,26%).
+  - Comparativo entre médias Macro, Weighted e Micro.
+- **`notes/supervisionado.md`**: Guia teórico detalhado cobrindo o ecossistema Scikit-Learn, a intuição do particionamento (treino, validação, teste), a importância do `random_state=42` e do `stratify=y`, a validação cruzada, matriz de confusão e tabela de tomada de decisão para métricas em projetos reais.
 
 ### 05/09/2026 - Criação da Pasta `notes/` e Guia de Regressão Linear
 - **Criação da pasta `notes/`**: Estruturada para centralizar o material de apoio, anotações de aula, fórmulas e guias conceituais da disciplina.
