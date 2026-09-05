@@ -45,11 +45,31 @@ Temos um servidor web configurado para hospedar as aplicações em formato de si
 cd python_django
 uv run python manage.py runserver
 ```
-*(Após rodar o comando, abra o link http://127.0.0.1:8000/ no seu navegador)*
+**Opção C: Documentação e Notas de Estudo (`notes/`)**
+Para guias teóricos, aprofundamento conceitual e orientações passo a passo de como estudar e debugar os códigos:
+- Consulte a pasta [`notes/`](notes/): contém anotações estruturadas e documentações didáticas dos tópicos vistos em aula.
+- Exemplo: [`notes/regressao.md`](notes/regressao.md) traz a dissecação completa dos scripts de regressão linear (do modelo geométrico básico até o Gradiente Descendente e Scikit-Learn).
+
+## 📁 Estrutura do Repositório
+
+```text
+projeto-am/
+├── notes/             # Anotações teóricas, guias de estudo e roteiros de depuração
+│   └── regressao.md   # Guia detalhado da trilha de Regressão Linear (01 a 07)
+├── python_django/     # Servidor web Django e aplicação interativa com Plotly
+├── python_scripts/    # Scripts Python para experimentos de AM (01 a 07)
+├── pyproject.toml     # Gerenciamento de dependências via uv
+└── README.md          # Documentação principal do projeto
+```
 
 ## 📝 Diário de Bordo e Avanços
 
 Esta seção será atualizada progressivamente com os avanços do projeto.
+
+### 05/09/2026 - Criação da Pasta `notes/` e Guia de Regressão Linear
+- **Criação da pasta `notes/`**: Estruturada para centralizar o material de apoio, anotações de aula, fórmulas e guias conceituais da disciplina.
+- **`notes/regressao.md`**: Criado guia completo cobrindo do `regressao_01.py` ao `regressao_07.py`. Detalha o aprendizado passo a passo, conceitos matemáticos (MSE, OLS, Gradiente Descendente), sugestões de experimentos e técnicas de depuração (*debugging* com `breakpoint()` e IDE).
+
 
 ### 29/08/2026 - Configuração de Bibliotecas e Ambiente Web
 Para seguir com a ementa da disciplina, adicionamos suporte a visualização de dados e criamos a estrutura para rodar a aplicação em um navegador web.
