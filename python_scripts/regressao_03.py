@@ -18,13 +18,9 @@ plt.title('Preço estimado do imóvel')
 #
 ## Ajustando manualmente os parâmetros da Regressão Linear
 #
-# Parâmetros da regressão linear
-# Nota: No slide da aula propõe-se encontrar os valores corretos:
-# a = ?? # Valor de partida
-# b = ?.?? # Quanto o preço aumenta para cada m² adicional
-# Conforme calculado analiticamente no slide 24:
-a = 120.23986 # Valor de partida
-b = 0.09914044 # Quanto o preço aumenta para cada m² adicional
+# Parâmetros da regressão linear calculados analiticamente (OLS):
+a = 120.23986 # Valor de partida (intercepto)
+b = 0.09914044 # Quanto o preço aumenta para cada m² adicional (coeficiente angular)
 
 # Valores de X para desenhar a reta
 X = np.linspace(0, 2500, 2500)

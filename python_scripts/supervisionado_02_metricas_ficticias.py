@@ -1,7 +1,6 @@
 """
 supervisionado_02_metricas_ficticias.py
 Dissecação Matemática das Métricas de Avaliação em Classificação Multiclasse
-Baseado nos dados fictícios dos slides 29 a 69 do Prof. Dr. Ronaldo Martins da Costa (UFG / INF)
 
 Objetivo:
 Demonstrar passo a passo, no código, como calcular:
@@ -29,16 +28,11 @@ def main():
     classes = ["Setosa", "Virgínica", "Versicolor"]
 
     # ---------------------------------------------------------
-    # MATRIZ DE CONFUSÃO DOS SLIDES (Slide 30 / 32)
+    # MATRIZ DE CONFUSÃO HIPOTÉTICA
     # Linhas = Classe Predita pelo Modelo
     # Colunas = Classe Real (Verdadeira)
-    #
-    # Nota didática sobre os slides:
-    # Nos slides 30 e 31, a célula (Versicolor, Virgínica) é 2 (total de amostras = 38).
-    # A partir do slide 32, a célula (Versicolor, Virgínica) é 9 (total de amostras = 45),
-    # utilizada para demonstrar os cálculos detalhados de VP, FP, FN e VN da Setosa.
     # ---------------------------------------------------------
-    matriz_slide32 = np.array([
+    matriz_confusao = np.array([
         # Real: Setosa, Virgínica, Versicolor
         [7, 1, 2],  # Predita: Setosa
         [3, 8, 4],  # Predita: Virgínica
@@ -46,30 +40,30 @@ def main():
     ])
 
     df_confusao = pd.DataFrame(
-        matriz_slide32,
+        matriz_confusao,
         index=[f"Pred: {c}" for c in classes],
         columns=[f"Real: {c}" for c in classes],
     )
 
-    print_separator("Matriz de Confusão (Dados dos Slides 32 a 68)")
+    print_separator("Matriz de Confusão Multiclasse")
     print(df_confusao)
 
-    total_amostras = matriz_slide32.sum()
+    total_amostras = matriz_confusao.sum()
     print(f"\nTotal de Elementos na Avaliação: {total_amostras}")
 
     # ---------------------------------------------------------
-    # 1. DECOMPOSIÇÃO ONE-VS-REST PARA A CLASSE SETOSA (Slide 32-36)
+    # 1. DECOMPOSIÇÃO ONE-VS-REST PARA A CLASSE SETOSA
     # ---------------------------------------------------------
     idx_setosa = 0
 
     # Verdadeiro Positivo (VP): Predito Setosa E Real Setosa
-    vp_setosa = matriz_slide32[idx_setosa, idx_setosa]
+    vp_setosa = matriz_confusao[idx_setosa, idx_setosa]
 
     # Falso Positivo (FP): Predito Setosa, mas Real NÃO é Setosa (soma da linha exceto DP)
-    fp_setosa = matriz_slide32[idx_setosa, :].sum() - vp_setosa
+    fp_setosa = matriz_confusao[idx_setosa, :].sum() - vp_setosa
 
     # Falso Negativo (FN): Real é Setosa, mas Predito NÃO é Setosa (soma da coluna exceto DP)
-    fn_setosa = matriz_slide32[:, idx_setosa].sum() - vp_setosa
+    fn_setosa = matriz_confusao[:, idx_setosa].sum() - vp_setosa
 
     # Verdadeiro Negativo (VN): Nem Predito Setosa, nem Real Setosa (submatriz restante)
     vn_setosa = total_amostras - (vp_setosa + fp_setosa + fn_setosa)
@@ -107,23 +101,18 @@ def main():
     print(f"F1-Score:                 {f1_setosa * 100:.2f}% -> 2 * (70.00 * 46.66) / (70.00 + 46.66)")
 
     # ---------------------------------------------------------
-    # 3. RECALL POR CLASSE E RECALL MACRO (Slides 43 e 44)
+    # 3. RECALL POR CLASSE E RECALL MACRO
     # ---------------------------------------------------------
-    # No slide 43:
-    # Setosa: 7 / (7 + 8) = 46.66%
-    # Virgínica: 8 / (8 + 1 + 9) = 44.44%
-    # Versicolor: 6 / (6 + 4 + 2) = 50.00%
-    # Recall Macro: (46.66 + 44.44 + 50.00) / 3 = 47.03%
     recalls = []
     precisoes = []
     f1s = []
     suportes = []  # quantidade real por classe
 
     for i, nome in enumerate(classes):
-        vp_i = matriz_slide32[i, i]
-        fp_i = matriz_slide32[i, :].sum() - vp_i
-        fn_i = matriz_slide32[:, i].sum() - vp_i
-        total_real_i = matriz_slide32[:, i].sum()
+        vp_i = matriz_confusao[i, i]
+        fp_i = matriz_confusao[i, :].sum() - vp_i
+        fn_i = matriz_confusao[:, i].sum() - vp_i
+        total_real_i = matriz_confusao[:, i].sum()
 
         prec_i = vp_i / (vp_i + fp_i) if (vp_i + fp_i) > 0 else 0
         rec_i = vp_i / (vp_i + fn_i) if (vp_i + fn_i) > 0 else 0
@@ -134,25 +123,25 @@ def main():
         f1s.append(f1_i)
         suportes.append(total_real_i)
 
-    print_separator("Recall Por Classe & Recall Macro (Slides 43-44)")
+    print_separator("Recall Por Classe & Recall Macro")
     for nome, rec, sup in zip(classes, recalls, suportes):
         print(f"Recall {nome:10s}: {rec * 100:.2f}% (Total de amostras reais: {sup})")
 
     recall_macro = np.mean(recalls)
     print(f"\n--> Recall Macro (Média Simples): {recall_macro * 100:.2f}%")
 
-    # Recall Weighted (Slide 46)
+    # Recall Weighted
     recall_weighted = sum(r * s for r, s in zip(recalls, suportes)) / total_amostras
     print(f"--> Recall Weighted (Média Ponderada pelo suporte): {recall_weighted * 100:.2f}%")
 
-    # Recall Micro (Slide 48) = soma(VP) / (soma(FN) + soma(VP))
-    soma_vp = np.trace(matriz_slide32)
-    soma_fn = sum(matriz_slide32[:, i].sum() - matriz_slide32[i, i] for i in range(3))
+    # Recall Micro = soma(VP) / (soma(FN) + soma(VP))
+    soma_vp = np.trace(matriz_confusao)
+    soma_fn = sum(matriz_confusao[:, i].sum() - matriz_confusao[i, i] for i in range(3))
     recall_micro = soma_vp / (soma_fn + soma_vp)
     print(f"--> Recall Micro (Soma Global): {recall_micro * 100:.2f}%")
 
     # ---------------------------------------------------------
-    # 4. TABELA RESUMO DE MÉTRICAS (Slide 69)
+    # 4. TABELA RESUMO DE MÉTRICAS
     # ---------------------------------------------------------
     print_separator("Tabela Comparativa de Médias Multiclasse")
     tabela_medias = pd.DataFrame({
@@ -176,14 +165,16 @@ def main():
     print(tabela_medias)
 
     # ---------------------------------------------------------
-    # 5. CASO ESPECIAL: ACURÁCIA GLOBAL DO SLIDE 31
+    # 5. ACURÁCIA GLOBAL DO MODELO MULTICLASSE
     # ---------------------------------------------------------
-    # No slide 31, com total = 38 e acertos = 21:
-    acuracia_slide31 = 21 / 38
-    print_separator("Acurácia Global do Modelo (Slide 31)")
-    print(f"Total de acertos na Diagonal Principal: 7 + 8 + 6 = 21")
-    print(f"Total de elementos no teste: 38")
-    print(f"Acurácia Global: 21 / 38 = {acuracia_slide31 * 100:.2f}%")
+    # Para uma matriz de teste com total de 38 amostras e 21 acertos:
+    acertos_globais = 21
+    total_teste = 38
+    acuracia_global = acertos_globais / total_teste
+    print_separator("Acurácia Global do Modelo")
+    print(f"Total de acertos na Diagonal Principal: 7 + 8 + 6 = {acertos_globais}")
+    print(f"Total de elementos no teste: {total_teste}")
+    print(f"Acurácia Global: {acertos_globais} / {total_teste} = {acuracia_global * 100:.2f}%")
 
 
 if __name__ == "__main__":

@@ -23,7 +23,7 @@ Certifique-se de ter instalado no seu computador:
 
 ### 3. Como configurar o ambiente e instalar dependências
 
-O `uv` facilita muito esse processo. Dentro da pasta do projeto, apenas rode o comando abaixo. Ele irá automaticamente criar o ambiente virtual (equivalente ao `am-env` dos slides) e sincronizar as dependências:
+O `uv` facilita muito esse processo. Dentro da pasta do projeto, apenas rode o comando abaixo. Ele irá automaticamente criar o ambiente virtual isolado e sincronizar as dependências:
 
 ```bash
 uv sync
@@ -63,7 +63,7 @@ projeto-am/
 ├── python_scripts/                               # Scripts Python para experimentos de AM
 │   ├── regressao_01.py ... regressao_07.py      # Trilha de Regressão Linear
 │   ├── supervisionado_01.py                      # Classificação Iris (Pipeline, KNN, GridSearchCV, plots 2D/3D)
-│   └── supervisionado_02_metricas_ficticias.py   # Dissecação e validação das métricas multiclasse (slides UFG)
+│   └── supervisionado_02_metricas_ficticias.py   # Dissecação e validação prática de métricas multiclasse
 ├── pyproject.toml                                # Gerenciamento de dependências via uv
 └── README.md                                     # Documentação principal do projeto
 ```
@@ -80,10 +80,10 @@ Esta seção será atualizada progressivamente com os avanços do projeto.
   - Construção de `Pipeline` com `StandardScaler` e `KNeighborsClassifier`.
   - Otimização de hiperparâmetros via `GridSearchCV` com 10 Folds de Validação Cruzada.
   - Relatório de métricas (`classification_report`, `confusion_matrix`, `accuracy_score`) e teste de predição pontual.
-- **`python_scripts/supervisionado_02_metricas_ficticias.py`**: Script didático reproduzindo os cálculos dos slides do Prof. Dr. Ronaldo Martins da Costa:
+- **`python_scripts/supervisionado_02_metricas_ficticias.py`**: Script didático com a matemática das métricas multiclasse:
   - Decomposição da Matriz de Confusão 3x3 na abordagem *One-vs-Rest* (Setosa vs Resto).
   - Cálculo detalhado de Verdadeiro Positivo (VP), Falso Positivo (FP), Falso Negativo (FN) e Verdadeiro Negativo (VN).
-  - Apresentação passo a passo e validação com os números da aula para Precisão (70%), Recall (46,67%), Especificidade (90%), Acurácia One-vs-Rest (75,56%), F1-Score (56%) e Acurácia Global (55,26%).
+  - Apresentação passo a passo do cálculo de Precisão (70%), Recall (46,67%), Especificidade (90%), Acurácia One-vs-Rest (75,56%), F1-Score (56%) e Acurácia Global (55,26%).
   - Comparativo entre médias Macro, Weighted e Micro.
 - **`notes/supervisionado.md`**: Guia teórico detalhado cobrindo o ecossistema Scikit-Learn, a intuição do particionamento (treino, validação, teste), a importância do `random_state=42` e do `stratify=y`, a validação cruzada, matriz de confusão e tabela de tomada de decisão para métricas em projetos reais.
 

@@ -168,7 +168,7 @@ grid.fit(X_train, y_train)
 Para entender o comportamento do modelo, a métrica mais intuitiva é a **Matriz de Confusão**.
 
 ### 6.1. A Matriz de Confusão Multiclasse
-Considere o exemplo fictício dos slides da UFG (Slide 32):
+Considere um exemplo hipotético para um problema de 3 classes (Setosa, Virgínica e Versicolor):
 
 | Classe Predita \ Classe Real | Setosa | Virgínica | Versicolor | Total Predito |
 | :--- | :---: | :---: | :---: | :---: |
@@ -244,7 +244,7 @@ Proporção de acertos globais em relação ao total de previsões:
 $$\text{Acurácia} = \frac{\text{Acertos Totais}}{\text{Total de Amostras}} = \frac{VP + VN}{VP + VN + FP + FN}$$
 
 - **Na abordagem One-vs-Rest (Setosa)**: $\frac{7 + 27}{45} = \mathbf{75{,}55\%}$.
-- **Acurácia Global do Teste (Slide 31)**: $\frac{7 + 8 + 6}{38} = \frac{21}{38} = \mathbf{55{,}26\%}$.
+- **Acurácia Global Multiclasse**: $\frac{\text{Soma da Diagonal Principal}}{\text{Total de Amostras}} = \frac{7 + 8 + 6}{38} = \frac{21}{38} = \mathbf{55{,}26\%}$.
 - **A Armadilha da Acurácia:** Se 99% das amostras forem de classe negativa (ex: fraude em cartão), um modelo burro que sempre prevê "não é fraude" terá 99% de acurácia, mas 0% de Recall para a classe de interesse! Por isso, a acurácia é desaconselhada em datasets desbalanceados.
 
 ---
